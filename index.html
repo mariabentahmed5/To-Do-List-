@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GiveMeACode - To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .input-group input,
+    .input-group button {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex: 1;
+    }
+
+    .input-group button {
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .input-group button:hover {
+      background-color: #0088cc;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background-color: #e0f7ff;
+    }
+
+    .task-item.completed span {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .task-item button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 GiveMeACode To-Do List</h1>
+
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="Enter task..." />
+      <input type="date" id="dateInput" />
+      <input type="color" id="colorInput" value="#00aaff" />
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskText = document.getElementById("taskInput").value.trim();
+      const date = document.getElementById("dateInput").value;
+      const color = document.getElementById("colorInput").value;
+
+      if (!taskText) {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const taskList = document.getElementById("taskList");
+
+      const li = document.createElement("li");
+      li.className = "task-item";
+      li.style.backgroundColor = color;
+
+      const span = document.createElement("span");
+      span.textContent = `${taskText} (${date || "no date"})`;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.onchange = () => li.classList.toggle("completed");
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "❌";
+      deleteBtn.onclick = () => li.remove();
+
+      li.appendChild(checkbox);
+      li.appendChild(span);
+      li.appendChild(deleteBtn);
+
+      taskList.appendChild(li);
+
+      // Clear inputs
+      document.getElementById("taskInput").value = "";
+      document.getElementById("dateInput").value = "";
+    }
+  </script>
+</body>
+</html>
